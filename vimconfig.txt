@@ -1,0 +1,117 @@
+
+" Archivo de configuración para Vim
+" Autor: Nicolás Villagran.
+" Fecha: 2025-01-24
+" Descripción: Configuración personal para Vim
+"
+" Necesita instalar (node, npm)
+" --------------------------------------------
+" Plugins.
+call plug#begin('~/.vim/plugged')
+Plug 'sheerun/vim-polyglot'             " syntax
+
+Plug 'maximbaz/lightline-ale'           " status bar
+Plug 'itchyny/lightline.vim'
+
+Plug 'preservim/nerdtree'               " tree
+
+Plug 'morhetz/gruvbox'                  " theme
+Plug 'shinchu/lightline-gruvbox.vim'
+
+Plug 'jiangmiao/auto-pairs'             " typing
+Plug 'alvan/vim-closetag'
+Plug 'tpope/vim-surround'
+
+Plug 'neoclide/coc.nvim', {'branch' : 'release'} " autocomplete
+
+Plug 'honza/vim-snippets'               " snippets
+call plug#end()
+
+" Configuración global.
+set number              " Activa numeración de lineas.
+set mouse=a             " Activa el mouse (creo).
+set numberwidth=1       " grosor de la numeración?
+set encoding=utf-8      " Usa codificación UTF-8
+set ruler               " Averiguar que hace... 
+set cursorline          " Averiguar que hace...
+"set sw=2               " Averiguar que hace...
+
+"set clipboard=unnamedplus    " Habilitar el portapapeles (copiar y pegar)
+
+
+" Configuración de apariencia.
+" Mejorar la visualización
+set showcmd             " Averiguar que hace...
+set hlsearch            " Averiguar que hace...
+set incsearch           " Averiguar que hace...
+" configuracion colores
+colorscheme gruvbox
+set background=dark
+let g:gruvbox_contrast_dark = "hard"
+syntax on
+
+" Configuración de navegación y edicion.
+" Indentación y espacios
+set tabstop=2           " Averiguar que hace...
+set shiftwidth=2        " Averiguar que hace...
+set expandtab           " Averiguar que hace...
+set autoindent          " Averiguar que hace...
+
+
+" Mapas de teclado.
+" Usa Tab para navegar por las sugerencias de autocompletado cuando el menú esté visible
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
+" Usa Enter para seleccionar la sugerencia de autocompletado
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+"nerdtree
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+
+" Configuración de plugins.
+let NERDTreeShowHidden=1              " nerdtree hidden files
+let g:NERDTreeQuitOnOpen = 1          " cerrar nerdtree despues de abrir archivo.
+
+" config - snippets
+"let g:coc_snippet_next = '<tab>'
+"let g:coc_snippet_prev = '<s-tab>'
+
+" configuracion de coc-tsserver
+set signcolumn=yes
+let g:coc_diagnostic_virtual_text = 1
+" Revisa el codigo para buscar errores, sin necesidad de guardar el archivo.
+" solo tienes que salir del 'modo editor'
+let g:coc_diagnostic_check_current_line = 1
+"highlight CocUnderline cterm=underline
+" subrayado de tsserver 'underline'
+highlight CocErrorHighlight cterm=underline ctermfg=red
+highlight CocWarningHighlight cterm=underline ctermfg=yellow
+highlight CocHintHighlight cterm=underline ctermfg=blue
+highlight CocInfoHighlight cterm=underline ctermfg=cyan
+"let g:coc_config['tsserver'] = {'tsconfig': 'tsconfig.json'}
+" Activar destacado de errores
+"let g:coc_diagnostic_display_from = 'tsserver'
+" Resaltado de sintaxis coc-tsserver
+"highlight CocErrorSign ctermfg=red
+"highlight CocWarningSign ctermfg=yellow
+let g:coc_diagnostic_level = 'hint'
+let g:coc_diagnostic_error_sign = '❌'
+let g:coc_diagnostic_warning_sign = '⚠️'
+" Signos de errores coc-tsserver
+let g:coc_status_error_sign = '❌'
+let g:coc_status_warning_sign = '⚠️'
+"let g:coc_global_extensions = ['coc-tsserver']
+
+
+" Autocomandos.
+autocmd BufWritePost *.ts :call CocAction('diagnosticRefresh')
+"autocmd CursorHold,CursorHoldI * call CocActionAsync('highlight')    " actualizacion automatica - Averiguar que hace...
+"autocmd FileType typescript,typescriptreact setlocal omnifunc=CocAction('doHover')    " Archivos ts/tsx - Averiguar que hace...
+"autocmd FileType typescript,typescriptreact :CocCommand tsserver.start  "averiguar que hace...
+
+
+" Experimentos o configuraciones temporales.
+"let g:coc_service_started = 0    "veriguar que hace...
+let g:coc_enable_logging = 1      " habilita la carga de logs (errores mas detallados)
